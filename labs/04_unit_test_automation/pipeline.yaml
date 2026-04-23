@@ -32,11 +32,16 @@ spec:
         - init      
 
     - name: lint
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace
       taskRef:
-        name: echo
+        name: flake8
       params:
-      - name: message
-        value: "Calling Flake8 linter..."
+      - name: image
+        value: python:3.9-slim
+      - name: args
+        value: ["--count","--max-complexity=10","--max-line-length=127","--statistics"]
       runAfter:
         - clone
 
